@@ -12,7 +12,7 @@ namespace DataManager.Generic.Execution
     {
         public string Name { get; set; }
         public object Value { get; set; }
-        public ColumnType Type { get; set; }
+        public string Type { get; set; }
         public ParameterDirection Direction { get; set; }
         public int Size { get; set; }
 
@@ -20,34 +20,9 @@ namespace DataManager.Generic.Execution
         {
             Name= name;
             Value= value;
-            Type = SetType(type);
+            Type = type;
             Direction = SetDirection(diretion);
             Size = size;
-        }
-
-        private static ColumnType SetType(string typeDescription)
-        {
-            if (string.IsNullOrEmpty(typeDescription)) return ColumnType.Varchar2;
-
-            switch (typeDescription.ToUpper())
-            {
-                case "VARCHAR2":
-                    return ColumnType.Varchar2;
-                case "NUMBER":
-                    return ColumnType.Number;
-                case "INTEGER":
-                    return ColumnType.Integer;
-                case "DATE":
-                    return ColumnType.Date;
-                case "TIMESTAMP":
-                    return ColumnType.Timestamp;
-                case "CURSOR":
-                    return ColumnType.Cursor;
-                case "CLOB":
-                    return ColumnType.Clob;
-                default:
-                    return ColumnType.Varchar2;
-            }
         }
 
         private static ParameterDirection SetDirection(string direction)

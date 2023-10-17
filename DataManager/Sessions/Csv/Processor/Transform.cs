@@ -27,13 +27,13 @@ namespace DataManager.Sessions.Csv.Processor
             }
             catch (Exception e)
             {
-                return "ERROR[5]" + e.ToString() + Environment.NewLine;
+                return e.ToString();
             }
             CsvCommand.Xml = xml.Trim();
             return "OK";
         }
 
-        private string PrepareXml(string xml)
+        private static string PrepareXml(string xml)
         {
             xml = xml.Replace("'", "''");
             xml = xml.Replace("&apos;", "&apos;&apos;");
@@ -42,7 +42,7 @@ namespace DataManager.Sessions.Csv.Processor
             return xml;
         }
 
-        private void Load()
+        private static void Load()
         {
             foreach (string name in Assembly.GetExecutingAssembly().GetManifestResourceNames())
             {
@@ -63,23 +63,16 @@ namespace DataManager.Sessions.Csv.Processor
 
         public string Merge()
         {
-            SQLiteInstructions inst;
+            Execute inst;
             string result;
             try
             {
-                inst = new SQLiteInstructions(CsvCommand.Xml);
-            }
-            catch (Exception e)
-            {
-                return "ERROR[1]" + e.ToString() + Environment.NewLine;
-            }
-            try
-            {
+                inst = new Execute(CsvCommand.Xml);
                 result = inst.SQLiteCreation(CsvCommand.Instruction);
             }
             catch (Exception e)
             {
-                return "ERROR[2]" + e.ToString() + Environment.NewLine;
+                return e.ToString();
             }
             return result;
         }

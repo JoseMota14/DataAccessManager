@@ -68,9 +68,13 @@ namespace DataManager.Models.Csv
 
         }
 
-        /*
-         * Returns the DML used to insert values
-        */
+
+        public string GetDdl(bool insert)
+        {
+            StringBuilder text = GenerateDDLText(insert);
+            return $"CREATE TABLE {TableName} ({text});";
+        }
+
         public string GetDml(Row r)
         {
             StringBuilder stBuilderValue = new();
@@ -99,7 +103,7 @@ namespace DataManager.Models.Csv
                     }
                 }
             }
-            return string.Format("INSERT INTO {0} VALUES ({1})", TableName, stBuilderValue);
+            return $"INSERT INTO {TableName} VALUES ({stBuilderValue})";
         }
 
         private StringBuilder GenerateDDLText(bool insert)
@@ -125,13 +129,5 @@ namespace DataManager.Models.Csv
             return stBuilder;
         }
 
-        /*
-         *  Returns the DLL used to create the table
-        */
-        public string GetDdl(bool insert)
-        {
-            StringBuilder text = GenerateDDLText(insert);
-            return string.Format("CREATE TABLE {0} ({1});", TableName, text);
-        }
     }
 }

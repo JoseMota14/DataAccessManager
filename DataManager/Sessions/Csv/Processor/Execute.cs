@@ -7,11 +7,11 @@ using System.Xml.Linq;
 
 namespace DataManager.Sessions.Csv.Processor
 {
-    internal class SQLiteInstructions
+    internal class Execute
     { 
     private string Xml { get; set; }
 
-    internal SQLiteInstructions(string xml)
+    internal Execute(string xml)
     {
         Xml = xml;
     }
@@ -34,7 +34,7 @@ namespace DataManager.Sessions.Csv.Processor
                 }
                 catch (Exception e)
                 {
-                    return "ERROR[3] - CREATE TABLES " + e.ToString() + Environment.NewLine;
+                    return e.ToString();
                 }
             }
             using (SQLiteCommand cmd = new SQLiteCommand(instruction, con))
@@ -46,7 +46,7 @@ namespace DataManager.Sessions.Csv.Processor
                 }
                 catch (Exception e)
                 {
-                    return "ERROR[4] - EXECUTING QUERY " + e.ToString() + Environment.NewLine;
+                    return e.ToString();
                 }
             }
         }
@@ -55,9 +55,9 @@ namespace DataManager.Sessions.Csv.Processor
 
     internal Data DataObject()
     {
-        Data data = new Data();
+        Data data = new ();
 
-        XmlDocument document = new XmlDocument();
+        XmlDocument document = new ();
         document.LoadXml(Xml);
         XmlNodeList r = document.SelectSingleNode("data").SelectNodes("*");
 
@@ -68,9 +68,6 @@ namespace DataManager.Sessions.Csv.Processor
         return data;
     }
 
-    /*
-     * Creates the tables and insert values 
-    */
     private void CreateTable(Data data, SQLiteCommand cmd)
     {
         foreach (Table t in data.Tables)
@@ -86,17 +83,14 @@ namespace DataManager.Sessions.Csv.Processor
         }
     }
 
-    /*
-     * Return is obtain by the Select Query
-    */
     private string ExecuteQuery(SQLiteCommand cmd)
     {
-        XElement result = new XElement("ROWSET");
+        XElement result = new ("ROWSET");
         using (SQLiteDataReader rdr = cmd.ExecuteReader())
         {
             while (rdr.Read())
             {
-                XElement row = new XElement("ROW");
+                XElement row = new ("ROW");
                 for (int i = 0; i < rdr.FieldCount; i++)
                 {
                     if (rdr.GetValue(i).Equals("NULL") || rdr.GetValue(i).Equals(System.DBNull.Value))

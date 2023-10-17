@@ -18,9 +18,6 @@ namespace DataManager.Models.Csv
             Tables = new List<Table>();
         }
 
-        /*
-         * Use XPATH to Select nodes inside the XML 
-        */
         public Table Parse(XmlNode n)
         {
             XmlNodeList nodes = n.SelectNodes("*");
