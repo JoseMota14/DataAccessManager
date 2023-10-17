@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ExtraRefs\EntityFramework.dll" />
+    <None Remove="ExtraRefs\EntityFramework.SqlServer.dll" />
+    <None Remove="ExtraRefs\SQLite.Interop.dll" />
+    <None Remove="ExtraRefs\System.Data.SQLite.dll" />
+    <None Remove="ExtraRefs\System.Data.SQLite.EF6.dll" />
+    <None Remove="ExtraRefs\System.Data.SQLite.Linq.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ExtraRefs\EntityFramework.dll" />
+    <EmbeddedResource Include="ExtraRefs\EntityFramework.SqlServer.dll" />
+    <EmbeddedResource Include="ExtraRefs\SQLite.Interop.dll" />
+    <EmbeddedResource Include="ExtraRefs\System.Data.SQLite.dll" />
+    <EmbeddedResource Include="ExtraRefs\System.Data.SQLite.EF6.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ExtraRefs\System.Data.SQLite.Linq.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.50" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>ExtraRefs\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>ExtraRefs\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite">
+      <HintPath>ExtraRefs\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6">
+      <HintPath>ExtraRefs\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>ExtraRefs\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
